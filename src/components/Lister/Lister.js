@@ -26,8 +26,6 @@ export default function Contacts(props) {
 }
 
 Contacts.propTypes = {
-  id: propTypes.string.isRequired,
-  name: propTypes.string.isRequired,
-  number: propTypes.string,
+  contacts: propTypes.array.isRequired,
   deleteContact: propTypes.func.isRequired,
 };
