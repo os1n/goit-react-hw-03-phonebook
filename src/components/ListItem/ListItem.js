@@ -1,14 +1,13 @@
 import React from 'react';
 import propTypes from 'prop-types';
 
-export default function ListItem({ id, name, number, handleSubmit }) {
+export default function ListItem({ id, name, number, deleteContact }) {
   function handlePress(e) {
-    e.preventDefault();
-    handleSubmit(id);
+    deleteContact(id);
   }
 
   return (
-    <li key={id}>
+    <li>
       <span>Name: {name}</span>
       <br />
       <span>Number: {number}</span>
@@ -19,8 +18,8 @@ export default function ListItem({ id, name, number, handleSubmit }) {
 }
 
 ListItem.propTypes = {
-  id: propTypes.string,
-  name: propTypes.string,
-  number: propTypes.string,
-  handleSubmit: propTypes.func,
+  id: propTypes.string.isRequired,
+  name: propTypes.string.isRequired,
+  number: propTypes.string.isRequired,
+  deleteContact: propTypes.func.isRequired,
 };

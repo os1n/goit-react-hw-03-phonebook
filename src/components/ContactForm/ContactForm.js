@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Input from '../Input/Input';
-import propTypes from 'prop-types';
 
 export default class ContactForm extends Component {
   constructor(props) {
@@ -19,7 +18,9 @@ export default class ContactForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.sendItemBack(this.state.name, this.state.number);
+    if (this.state.name === '' || this.state.number === '')
+      alert('All fields must be filled.');
+    else this.props.sendItemBack(this.state.name, this.state.number);
   };
 
   render() {
@@ -48,7 +49,3 @@ export default class ContactForm extends Component {
     );
   }
 }
-
-ContactForm.propTypes = {
-  handleSubmit: propTypes.func,
-};
