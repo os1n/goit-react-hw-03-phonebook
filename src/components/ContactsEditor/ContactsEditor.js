@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import ContactsLister from '../ContactsLister/ContactsLister';
+import Contacts from '../Lister/Lister';
 import ContactForm from '../ContactForm/ContactForm';
-import ArrayFilter from '../ArrayFilter/ArrayFilter';
+import ContactListFilter from '../ArrayFilter/ArrayFilter';
 
 // External dependacies
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
 
 export default class ContactsEditor extends Component {
   state = {
@@ -24,15 +24,14 @@ export default class ContactsEditor extends Component {
       number: newnumber,
     };
 
-    const getContactById = (arr, name) => arr.find(x => x.name === name);
+    const getContactById = (arr, name) => arr.some(x => x.name === name);
 
-    this.setState(prevState => {
-      if (getContactById(prevState.contacts, newname)) {
-        alert('Such contact exists, be attentive!!!');
-        return;
-      }
-      return { contacts: [...prevState.contacts, contact] };
-    });
+    if (getContactById(this.state.contacts, newname))
+      alert('Such contact exists, be attentive!!!');
+    else
+      this.setState(prevState => {
+        return { contacts: [...prevState.contacts, contact] };
+      });
   };
 
   deleteContact = contactId => {
@@ -43,7 +42,7 @@ export default class ContactsEditor extends Component {
     });
   };
 
-  setfilter = filterValue => {
+  setFilter = filterValue => {
     return this.setState({ filter: filterValue });
   };
 
@@ -54,11 +53,11 @@ export default class ContactsEditor extends Component {
         <h1>Contacts Editor</h1>
         <ContactForm contacts={contacts} sendItemBack={this.addContact} />
 
-        <ArrayFilter sendFilterBack={this.setfilter} />
+        <ContactListFilter sendFilterBack={this.setFilter} />
 
         {contacts.length > 0 && (
-          <ContactsLister
-            inputArray={contacts}
+          <Contacts
+            contacts={contacts}
             inputTitle={'Contacts list'}
             filter={this.state.filter}
             deleteContact={this.deleteContact}
